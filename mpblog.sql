@@ -7,7 +7,6 @@
 CREATE DATABASE IF NOT EXISTS `mpblog` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `mpblog`;
 
--- first table---
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(65) NOT NULL,
@@ -22,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- second table---
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,

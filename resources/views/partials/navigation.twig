@@ -15,12 +15,32 @@
         <a href="{{ path_for('home') }}" class="navbar-item is-active">
           Home
         </a>
-        <a href="{{ path_for('auth.login') }}" class="navbar-item is-active">
-          Login
-        </a>
-        <a href="{{ path_for('auth.register') }}" class="navbar-item is-active">
-          Registrar
-        </a>
+        {% if not auth.check %}
+          <a href="{{ path_for('auth.login') }}" class="navbar-item is-active">
+            Login
+          </a>
+          <a href="{{ path_for('auth.register') }}" class="navbar-item is-active">
+            Registrar
+          </a>
+        {% else %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              {{ auth.user.name }}
+            </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="#">
+                Dashboard
+              </a>
+              <a class="navbar-item" href="#">
+                  Avatar
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="{{ path_for('auth.logout') }}">
+                Sair
+              </a>
+            </div>
+          </div> 
+        {% endif %}
       </div>
     </div>
   </div>

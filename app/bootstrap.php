@@ -29,12 +29,19 @@ $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
+// use validators
 $container['validator'] = function($container) {
     return new App\Validation\Validator;
 };
 
+// use flash messages
 $container['flash'] = function($container) {
     return new Slim\Flash\Messages;
+};
+
+// use authentication
+$container['auth'] = function($container) {
+    return new App\Auth\Auth($container);
 };
 
 $container['view'] = function ($container) {
@@ -48,6 +55,11 @@ $container['view'] = function ($container) {
     ));
 
     $view->getEnvironment()->addGlobal('flash', $container->flash);
+
+    $view->getEnvironment()->addGlobal('auth', [
+        'check' => $container->auth->check(),
+        'user' => $container->auth->user(),
+    ]);
 
     return $view;
 };

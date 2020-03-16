@@ -6,15 +6,24 @@ use App\Models\User;
 use App\Models\UserPermission;
 use Respect\Validation\Validator as v;
 
-class AuthController extends Controller {
-    public function login($request, $response) {
-        if ($request->isGet()) {
+class AuthController extends Controller
+{
+    public function login($request, $response)
+    {
+        if ($request->isGet())
             return $this->container->view->render($response, 'login.twig');
+
+        if(!$this->container->auth->attempt(
+            $request->getParam('email'),
+            $request->getParam('password'))) {
+            return $response->withRedirect($this->container->router->pathFor('auth.login'));
         }
 
+        return $response->withRedirect($this->container->router->pathFor('home'));
     }
 
-    public function register($request, $response) {
+    public function register($request, $response)
+    {
         if ($request->isGet()) {
             return $this->container->view->render($response, 'register.twig');
         }
@@ -42,5 +51,13 @@ class AuthController extends Controller {
         $user->permissions()->create(UserPermission::$defaults);
 
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
+    }
+
+    public function logout($request, $response)
+    {
+        if(isset($_SESSION['user'])){
+            unset($_SESSION['user']);
+            return $response->withRedirect($this->container->router->pathFor('home'));
+        }
     }
 }
