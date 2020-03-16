@@ -8,14 +8,29 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = new Slim\App([
     'settings' => [
-        'displayErrorDetails' => true
-    ]
+        'displayErrorDetails' => true,
+        'db' => [
+            'driver' => 'mysql',
+            'host' => '0.0.0.0',
+            'database' => 'mpblog',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ],
+    ],
 ]);
 
 $container = $app->getContainer();
 
-$container['view'] = function($container) {
-    $view = new\Slim\Views\Twig(__DIR__ . '/../resources/views', [
+$capsule = new Illuminate\Database\Capsule\Manager;
+$capsule->addConnection($container['settings']['db']);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
+$container['view'] = function ($container) {
+    $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false,
     ]);
 
@@ -27,11 +42,11 @@ $container['view'] = function($container) {
     return $view;
 };
 
-$container['HomeController'] = function($container) {
+$container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController($container);
 };
 
-$container['AuthController'] = function($container) {
+$container['AuthController'] = function ($container) {
     return new App\Controllers\AuthController($container);
 };
 
