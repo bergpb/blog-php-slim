@@ -44,6 +44,9 @@ $container['auth'] = function($container) {
     return new App\Auth\Auth($container);
 };
 
+// use upload
+$container['upload_directory'] = __DIR__ . '/../public/uploads';
+
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false,
@@ -70,6 +73,10 @@ $container['HomeController'] = function ($container) {
 
 $container['AuthController'] = function ($container) {
     return new App\Controllers\AuthController($container);
+};
+
+$container['UserController'] = function ($container) {
+    return new App\Controllers\UserController($container);
 };
 
 $app->add(new App\Middleware\DisplayInputErrorsMiddleware($container));

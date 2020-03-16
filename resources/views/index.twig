@@ -1,29 +1,28 @@
-{% extends 'layouts/base.twig' %}
+{% extends "layouts/base.twig" %}
 
 {% block content %}
 <section class="articles">
   <div class="column is-8 is-offset-2">
-      <div class="card article">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content has-text-centered">
-              <p class="title article-title"></p>
-              <div class="tags has-addons level-item">
-                <span class="tag is-rounded"></span>
-              </div>
+    <div class="card article">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-content has-text-centered">
+            <p class="title article-title"></p>
+            <div class="tags has-addons level-item">
+              <span class="tag is-rounded"></span>
             </div>
           </div>
-          <div class="content article-body">
-            {{ auth.user }}
-          </div>
-            <div class="has-text-right">
-              <a href="" class="button is-warning is-focused">Editar</a>
-              <a href="" class="button is-danger is-focused">Deletar</a>
-            </div>
         </div>
+        <div class="content article-body">
+          {{ auth.user }}
+        </div>
+          <div class="has-text-right">
+            <a href="" class="button is-warning is-focused">Editar</a>
+            <a href="" class="button is-danger is-focused">Deletar</a>
+          </div>
       </div>
-
-      <section class="hero is-info is-bold is-small promo-block">
+    </div>
+    <section class="hero is-info is-bold is-small promo-block">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
