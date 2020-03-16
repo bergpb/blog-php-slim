@@ -1,0 +1,13 @@
+  <p>Olá, </p>
+
+  <p>
+    Obrigado por criar o resgistro em nosso blog. Mas para que sua conta seja ativada
+    você deve clicar <a href="">aqui</a> para ativa-la.
+  </p>
+
+  <br />
+
+  <small> 
+    Equipe, <br />
+    Marcus Pereira Developer
+  </small>

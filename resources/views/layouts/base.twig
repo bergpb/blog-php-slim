@@ -1,0 +1,16 @@
+{% include 'partials/header.twig' %}
+
+{% include 'partials/navigation.twig' %}
+{% include 'partials/hero.twig' %}
+
+<div class="container">
+  {% block content %}
+  {% endblock %}
+</div>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+  <script src="{{ base_url() }}/js/bulma.js"></script>
+  <script src="{{ base_url() }}/libs/summernote/summernote-lite.min.js"></script>
+  {% block js %}{% endblock %}
+</body>
+</html>

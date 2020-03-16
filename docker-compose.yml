@@ -1,0 +1,33 @@
+version: '3'
+services:
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin-blog-slim
+        restart: always
+        ports:
+            - 8081:80
+        depends_on:
+            - database
+        networks:
+            - blog-slim-network
+        environment:
+            - PMA_HOST=database
+
+    database:
+        image: mysql:5.7
+        container_name: database-blog-slim
+        restart: always
+        ports:
+            - 3306:3306
+        volumes:
+            - /home/${USER}/docker-compose-data/db/blog-slim/mysql:/var/lib/mysql
+        networks:
+            - blog-slim-network
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_PASSWORD=root
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=blog-slim
+
+networks:
+    blog-slim-network:

@@ -1,0 +1,106 @@
+<section class="articles">
+  <div class="column is-8 is-offset-2">
+    <div class="card article">
+      <div class="card-content">
+        <form action="" method="POST">
+
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Título</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded has-icons-left">
+                  <input class="input is-medium" type="text" name="title" 
+                    placeholder="Windows 10 terá um novo terminal com abas.">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-heading"></i>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <label class="label">Status?</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="radio">
+                    <input type="radio" value="1" name="status">
+                    Publicado
+                  </label>
+                  <label class="radio">
+                    <input type="radio" value="0" checked name="status">
+                    Rascunho
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label">
+              <label class="label">Destacar</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="radio">
+                    <input type="radio" value="1" checked name="featured">
+                    Sim
+                  </label>
+                  <label class="radio">
+                    <input type="radio" value="0" name="featured">
+                    Não
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Descrição</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <textarea id="summernote" name="description" class=""></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field is-horizontal">
+            <div class="field-label">
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <button type="submit" class="button is-primary is-medium is-pulled-right">
+                    Postar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{% block js %}
+  <script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+          lang: 'pt-BR',
+          height: 300
+        });
+    });
+  </script>
+{% endblock %}
