@@ -31,15 +31,28 @@ class PostController extends Controller
         return $response->withRedirect($this->container->router->pathFor('post.create'));
     }
 
-    public function edit($request, $response){
+    public function edit($request, $response)
+    {
         return $this->container->view->render($response, 'post/edit.twig');
     }
 
-    public function update($request, $response){
+    public function update($request, $response)
+    {
         
     }
 
-    public function delete($request, $response){
-        
+    public function delete($request, $response)
+    {
+        $post = Post::find($request->getParam('id'));
+
+        if($post){
+            $post->delete();
+            $this->container->flash->addMessage('success', 'Post removido.');
+        } else {
+            $this->container->flash->addMessage('danger', 'Post não pode ser removido!');
+        }
+
+        return $response->withRedirect($this->container->router->pathFor('home'));
+
     }
 }

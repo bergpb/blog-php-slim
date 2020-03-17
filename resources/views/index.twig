@@ -8,7 +8,7 @@
         <div class="card-content">
           <div class="media">
             <div class="media-center">
-              <img src="{{ base_url }}/uploads/{{ auth.user.avatar }}" alt="Imagem do Author" class="author-image" />
+              <img src="{{ base_url }}/uploads/{{ post.author.avatar }}" alt="Imagem do Author" class="author-image" />
             </div>
             <div class="media-content has-text-centered">
               <p class="title article-title">{{ post.title | title }}</p>
@@ -22,22 +22,12 @@
           </div>
             <div class="has-text-right">
               <a href="" class="button is-warning is-focused">Editar</a>
-              <a href="" class="button is-danger is-focused">Deletar</a>
+              <a href="{{ path_for('post.delete') }}?id={{ post.id }}" class="button is-danger is-focused">Deletar</a>
             </div>
         </div>
       </div>
     {% endfor %}
-    <section class="hero is-info is-bold is-small promo-block">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            <i class="fa fa-bell-o"></i> Recentemente lançamos uma comunidade.</h1>
-          <span class="tag is-black is-medium is-rounded">
-            Venha fazer parte da nossa comunidade!
-          </span>
-        </div>
-      </div>
-    </section>
+    {% include "components/notifications.twig" %}
   </div>
 </section>
 {% endblock %}

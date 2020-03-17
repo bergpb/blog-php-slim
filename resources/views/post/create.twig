@@ -14,12 +14,15 @@
             <div class="field-body">
               <div class="field">
                 <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium" type="text" name="title" 
+                  <input class="input is-medium {{ errors.title ? 'is-danger' : ''}}" type="text" name="title" 
                     placeholder="Windows 10 terá um novo terminal com abas.">
                   <span class="icon is-small is-left">
                     <i class="fas fa-heading"></i>
                   </span>
                 </p>
+                {% if errors.title %}
+                  <small class="has-text-danger">{{ errors.title | first }}</small>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -51,8 +54,11 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <textarea id="summernote" name="description" class=""></textarea>
+                  <textarea id="summernote" name="description" class="{{ errors.description ? 'is-danger' : ''}}"></textarea>
                 </div>
+                {% if errors.description %}
+                  <small class="has-text-danger">{{ errors.description | first }}</small>
+                {% endif %}
               </div>
             </div>
           </div>
