@@ -79,6 +79,10 @@ $container['UserController'] = function ($container) {
     return new App\Controllers\UserController($container);
 };
 
+$container['PostController'] = function ($container) {
+    return new App\Controllers\PostController($container);
+};
+
 $app->add(new App\Middleware\DisplayInputErrorsMiddleware($container));
 
 require __DIR__ . '/routes.php';

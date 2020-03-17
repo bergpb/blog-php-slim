@@ -28,7 +28,7 @@
               {{ auth.user.name }}
             </a>
             <div class="navbar-dropdown">
-              <a class="navbar-item" href="#">
+              <a class="navbar-item" href="{{ path_for('post.create')}}">
                 Dashboard
               </a>
               <a class="navbar-item" href="{{ path_for('user.avatar') }}">

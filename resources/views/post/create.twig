@@ -1,3 +1,6 @@
+{% extends "layouts/base.twig"%}
+
+{% block content %}
 <section class="articles">
   <div class="column is-8 is-offset-2">
     <div class="card article">
@@ -42,26 +45,6 @@
           </div>
 
           <div class="field is-horizontal">
-            <div class="field-label">
-              <label class="label">Destacar</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="radio">
-                    <input type="radio" value="1" checked name="featured">
-                    Sim
-                  </label>
-                  <label class="radio">
-                    <input type="radio" value="0" name="featured">
-                    Não
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label">Descrição</label>
             </div>
@@ -90,10 +73,9 @@
         </form>
       </div>
     </div>
+    {% include "components/notifications.twig" %}
   </div>
-
 </section>
-
 {% endblock %}
 
 {% block js %}

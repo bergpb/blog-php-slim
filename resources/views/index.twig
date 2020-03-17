@@ -3,25 +3,30 @@
 {% block content %}
 <section class="articles">
   <div class="column is-8 is-offset-2">
-    <div class="card article">
-      <div class="card-content">
-        <div class="media">
-          <div class="media-content has-text-centered">
-            <p class="title article-title"></p>
-            <div class="tags has-addons level-item">
-              <span class="tag is-rounded"></span>
+    {% for post in posts %}
+      <div class="card article">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-center">
+              <img src="{{ base_url }}/uploads/{{ auth.user.avatar }}" alt="Imagem do Author" class="author-image" />
+            </div>
+            <div class="media-content has-text-centered">
+              <p class="title article-title">{{ post.title | title }}</p>
+              <p class="subtitle is-6 article-subtitle">
+                <span>{{ post.created_at | date('d/m/Y H:i:s') }}</span>
+              </p>
             </div>
           </div>
-        </div>
-        <div class="content article-body">
-          {{ auth.user }}
-        </div>
-          <div class="has-text-right">
-            <a href="" class="button is-warning is-focused">Editar</a>
-            <a href="" class="button is-danger is-focused">Deletar</a>
+          <div class="content article-body">
+            {{ post.description | raw }}
           </div>
+            <div class="has-text-right">
+              <a href="" class="button is-warning is-focused">Editar</a>
+              <a href="" class="button is-danger is-focused">Deletar</a>
+            </div>
+        </div>
       </div>
-    </div>
+    {% endfor %}
     <section class="hero is-info is-bold is-small promo-block">
       <div class="hero-body">
         <div class="container">
