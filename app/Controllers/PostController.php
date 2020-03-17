@@ -31,14 +31,36 @@ class PostController extends Controller
         return $response->withRedirect($this->container->router->pathFor('post.create'));
     }
 
-    public function edit($request, $response)
+    public function edit($request, $response, $params)
     {
-        return $this->container->view->render($response, 'post/edit.twig');
+        $data = [
+            'post' => Post::find($params['id'])
+        ];
+
+        return $this->container->view->render($response, 'post/edit.twig', $data);
     }
 
-    public function update($request, $response)
+    public function update($request, $response, $params)
     {
-        
+        $post = Post::find($params['id']);
+
+        $validation = $this->container->validator->validate($request, [
+            'title' => v::length(5)->notEmpty(),
+            'description' => v::notEmpty()
+        ]);
+
+        if($validation->failed())
+            return $response
+                ->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
+
+        $post->title = $request->getParam('title');
+        $post->description = $request->getParam('description');
+        $post->published = $request->getParam('published');
+        $post->save();
+
+        $this->container->flash->addMessage('success', 'Post alterado.');
+        return $response
+                ->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
     }
 
     public function delete($request, $response)

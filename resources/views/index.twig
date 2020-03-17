@@ -4,28 +4,32 @@
 <section class="articles">
   <div class="column is-8 is-offset-2">
     {% for post in posts %}
-      <div class="card article">
-        <div class="card-content">
-          <div class="media">
-            <div class="media-center">
-              <img src="{{ base_url }}/uploads/{{ post.author.avatar }}" alt="Imagem do Author" class="author-image" />
+      {% if post.published %}
+        <div class="card article">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-center">
+                <img src="{{ base_url }}/uploads/{{ post.author.avatar }}" alt="Imagem do Author" class="author-image" />
+              </div>
+              <div class="media-content has-text-centered">
+                <p class="title article-title">{{ post.title | title }}</p>
+                <p class="subtitle is-6 article-subtitle">
+                  <span>{{ post.created_at | date('d/m/Y H:i:s') }}</span>
+                </p>
+              </div>
             </div>
-            <div class="media-content has-text-centered">
-              <p class="title article-title">{{ post.title | title }}</p>
-              <p class="subtitle is-6 article-subtitle">
-                <span>{{ post.created_at | date('d/m/Y H:i:s') }}</span>
-              </p>
+            <div class="content article-body">
+              {{ post.description | raw }}
             </div>
+            {% if auth.check and auth.user.permissions.is_admin %}
+              <div class="has-text-right">
+                <a href="{{ path_for('post.edit', {'id': post.id }) }}" class="button is-warning is-focused">Editar</a>
+                <a href="{{ path_for('post.delete') }}?id={{ post.id }}" class="button is-danger is-focused">Deletar</a>
+              </div>
+            {% endif %}
           </div>
-          <div class="content article-body">
-            {{ post.description | raw }}
-          </div>
-            <div class="has-text-right">
-              <a href="" class="button is-warning is-focused">Editar</a>
-              <a href="{{ path_for('post.delete') }}?id={{ post.id }}" class="button is-danger is-focused">Deletar</a>
-            </div>
         </div>
-      </div>
+      {% endif %}
     {% endfor %}
     {% include "components/notifications.twig" %}
   </div>

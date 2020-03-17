@@ -1,8 +1,11 @@
+{% extends "layouts/base.twig"%}
+
+{% block content %}
 <section class="articles">
   <div class="column is-8 is-offset-2">
     <div class="card article">
       <div class="card-content">
-        <form action="" method="POST">
+        <form action="{{ path_for('post.edit', {'id': post.id}) }}" method="POST">
 
           <div class="field is-horizontal">
             <div class="field-label is-normal">
@@ -11,12 +14,15 @@
             <div class="field-body">
               <div class="field">
                 <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium" type="text" name="title" 
-                    placeholder="Windows 10 terá um novo terminal com abas.">
+                  <input class="input is-medium {{ errors.title ? 'is-danger' : ''}}" type="text" name="title" 
+                    placeholder="Windows 10 terá um novo terminal com abas." value="{{ post.title }}">
                   <span class="icon is-small is-left">
                     <i class="fas fa-heading"></i>
                   </span>
                 </p>
+                {% if errors.title %}
+                  <small class="has-text-danger">{{ errors.title | first }}</small>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -29,32 +35,12 @@
               <div class="field is-narrow">
                 <div class="control">
                   <label class="radio">
-                    <input type="radio" value="1" name="status">
+                    <input type="radio" {{ post.published ? 'checked' : ''}} value="1" name="published">
                     Publicado
                   </label>
                   <label class="radio">
-                    <input type="radio" value="0" checked name="status">
+                    <input type="radio" {{ post.published ? '' : 'checked'}} value="0" name="published">
                     Rascunho
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="field is-horizontal">
-            <div class="field-label">
-              <label class="label">Destacar</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="radio">
-                    <input type="radio" value="1" checked name="featured">
-                    Sim
-                  </label>
-                  <label class="radio">
-                    <input type="radio" value="0" name="featured">
-                    Não
                   </label>
                 </div>
               </div>
@@ -68,8 +54,13 @@
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <textarea id="summernote" name="description" class=""></textarea>
+                  <textarea id="summernote" name="description" class="{{ errors.description ? 'is-danger' : ''}}">
+                    {{ post.description }}
+                  </textarea>
                 </div>
+                {% if errors.description %}
+                  <small class="has-text-danger">{{ errors.description | first }}</small>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -81,7 +72,7 @@
               <div class="field">
                 <div class="control">
                   <button type="submit" class="button is-primary is-medium is-pulled-right">
-                    Postar
+                    Editar
                   </button>
                 </div>
               </div>
@@ -90,9 +81,10 @@
         </form>
       </div>
     </div>
+    {% include "components/notifications.twig" %}
   </div>
-
 </section>
+{% endblock %}
 
 {% block js %}
   <script>
