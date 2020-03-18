@@ -37,27 +37,85 @@ class AuthController extends Controller
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('auth.register'));
 
-        $now = new \Datetime(date('m/d/Y H:i:s'));
+        $now = new \Datetime(date('d/m/Y H:i:s'));
         $now->modify('+1 hour');
+        $key = bin2hex(random_bytes(20));
 
         $user = User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
-            'confirmation_key' => bin2hex(random_bytes(20)),
+            'confirmation_key' => $key,
             'confirmation_expires' => $now,
         ]);
 
         $user->permissions()->create(UserPermission::$defaults);
+
+        $payload = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'confirmation' => $key
+        ];
+
+        $this->container->mail->send($payload, 'welcome.twig', 'Bem vindo ao blog ' . $user->name, $payload);
 
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
     public function logout($request, $response)
     {
-        if(isset($_SESSION['user'])){
+        if(isset($_SESSION['user'])) {
             unset($_SESSION['user']);
             return $response->withRedirect($this->container->router->pathFor('home'));
         }
+    }
+
+    public function confirmation($request, $response)
+    {
+        $user = User::where('confirmation_key', $request->getParam('confirmation'))->first();
+
+        if(!$user) {
+            $this->container->flash->addMessage('error', 'A conta que você está tentando verificar não existe.');
+            return $response->withRedirect($this->container->router->pathFor('auth.login'));
+        }
+
+        if (strtotime(date('d/m/Y H:i:s')) > strtotime($user->confirmation_expires)) {
+            $this->container->flash->addMessage('error', "Parece que você demorou um pouco para confirmar seu cadastro.
+                Clique <a target='_blank' href='".$this->container->router->pathFor('auth.resend')."?email=".$user->email."'>aqui</a> para reenviar o email de confirmação.");
+        } else {
+            $user->is_confirmation = true;
+            $user->save();
+            $this->container->flash->addMessage('success', 'Conta confirmada com sucesso!');
+        }
+
+        return $response->withRedirect($this->container->router->pathFor('auth.login'));
+    }
+
+    public function resend($request, $response)
+    {
+        if(empty($request->getParam('email'))) {
+            $this->container->flash->addMessage('error', 'Houve um erro ao tentar processar sua solicitação.');
+            return $response->withRedirect($this->container->router->pathFor('auth.login'));
+        }
+
+        $now = new \Datetime(date('d/m/Y H:i:s'));
+        $now->modify('+1 hour');
+        $key = bin2hex(random_bytes(20));
+
+        $user = User::where('email', $request->getParam('email'))->first();
+        $user->confirmation_key = $key;
+        $user->confirmation_expires = $now;
+        $user->save();
+
+        $payload = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'confirmation' => $key
+        ];
+
+        $this->container->mail->send($payload, 'resend.twig', 'Reenvio de confirmação', $payload);
+
+        $this->container->flash->addMessage('success', 'Um novo email de confirmação foi enviado com sucesso.');
+        return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 }

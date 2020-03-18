@@ -1,13 +1,14 @@
-  <p>Olá, </p>
-
-  <p>
-    Obrigado por criar o resgistro em nosso blog. Mas para que sua conta seja ativada
-    você deve clicar <a href="">aqui</a> para ativa-la.
-  </p>
-
-  <br />
-
-  <small> 
-    Equipe, <br />
-    Marcus Pereira Developer
-  </small>
+<html>
+  <body>
+    <p>Olá, {{ name }}.</p>
+    <p>
+      Obrigado por criar o registro em nosso blog. Mas para que sua conta seja ativada
+      você deve clicar <a target='_blank' href="http://localhost:8000/auth/confirmacao?confirmation={{ confirmation }}">aqui</a>.
+    </p>
+    <br />
+    <small> 
+      Equipe, <br />
+      Blog do Sucesso
+    </small>
+  </body>
+</html>

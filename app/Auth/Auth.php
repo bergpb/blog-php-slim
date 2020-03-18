@@ -31,6 +31,11 @@ class Auth {
             return false;
         }
 
+        if(!$user->is_confirmation) {
+            $this->container->flash->addMessage('error', 'Você precisa confirmar seu cadastro para continuar.');
+            return false;
+        }
+
         $_SESSION['user'] = $user->id;
         return true;
     }

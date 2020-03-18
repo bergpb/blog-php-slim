@@ -47,6 +47,11 @@ $container['auth'] = function($container) {
 // use upload
 $container['upload_directory'] = __DIR__ . '/../public/uploads';
 
+// use email
+$container['mail'] = function($container) {
+    return new App\Mail($container);
+};
+
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => false,

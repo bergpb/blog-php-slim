@@ -18,5 +18,7 @@ $app->group('/usuario', function () {
 $app->group('/auth', function () {
     $this->map(['GET', 'POST'], '/login', 'AuthController:login')->setName('auth.login');
     $this->map(['GET', 'POST'], '/registrar', 'AuthController:register')->setName('auth.register');
+    $this->get('/confirmacao', 'AuthController:confirmation')->setName('auth.confirmation');
+    $this->get('/reenviar', 'AuthController:resend')->setName('auth.resend');
     $this->get('/logout', 'AuthController:logout')->setName('auth.logout');
 });
