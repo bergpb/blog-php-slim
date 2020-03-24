@@ -28,14 +28,23 @@ class PostController extends Controller
         ]);
 
         $this->container->flash->addMessage('success', 'Post cadastrado com sucesso.');
-        return $response->withRedirect($this->container->router->pathFor('post.create'));
+        return $response->withRedirect($this->container->router->pathFor('user.posts'));
     }
 
     public function edit($request, $response, $params)
     {
+        $user_id = $this->container->auth->user()->id;
+
         $data = [
-            'post' => Post::find($params['id'])
+            'post' => Post::find($params['id']),
         ];
+
+        if(!$this->container->auth->admin())
+            if($data['post']['user_id'] != $user_id)
+            {
+                $this->container->flash->addMessage('warning', 'Sem permissão para alterar este post.');
+                return $response->withRedirect($this->container->router->pathFor('user.posts'));
+            }
 
         return $this->container->view->render($response, 'post/edit.twig', $data);
     }
@@ -43,6 +52,14 @@ class PostController extends Controller
     public function update($request, $response, $params)
     {
         $post = Post::find($params['id']);
+        $user_id = $this->container->auth->user()->id;
+
+        if(!$this->container->auth->admin())
+            if($post['user_id'] != $user_id)
+            {
+                $this->container->flash->addMessage('warning', 'Sem permissão para alterar este post.');
+                return $response->withRedirect($this->container->router->pathFor('user.posts'));
+            }
 
         $validation = $this->container->validator->validate($request, [
             'title' => v::length(5)->notEmpty(),
@@ -50,8 +67,7 @@ class PostController extends Controller
         ]);
 
         if($validation->failed())
-            return $response
-                ->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
+            return $response->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
 
         $post->title = $request->getParam('title');
         $post->description = $request->getParam('description');
@@ -59,13 +75,20 @@ class PostController extends Controller
         $post->save();
 
         $this->container->flash->addMessage('success', 'Post alterado.');
-        return $response
-                ->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
+        return $response->withRedirect($this->container->router->pathFor('post.show', ['id' => $post->id]));
     }
 
     public function delete($request, $response)
     {
         $post = Post::find($request->getParam('id'));
+        $user_id = $this->container->auth->user();
+
+        if($this->container->auth->admin()){
+            if($post['user_id'] != $user_id){
+                $this->container->flash->addMessage('warning', 'Sem permissão para remover este post.');
+                return $response->withRedirect($this->container->router->pathFor('user.posts'));
+            }
+        }
 
         if($post){
             $post->delete();

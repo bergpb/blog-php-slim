@@ -1,8 +1,8 @@
-<nav class="navbar">
+<nav class="navbar is-fixed-top">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="../">
-        <img src="../images/bulma.png" alt="Logo">
+      <a href="{{ path_for('home') }}" class="navbar-item">
+        Início
       </a>
       <span class="navbar-burger burger" data-target="navbarMenu">
         <span></span>
@@ -12,34 +12,26 @@
     </div>
     <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-end">
-        <a href="{{ path_for('home') }}" class="navbar-item is-active">
-          Home
-        </a>
         {% if not auth.check %}
-          <a href="{{ path_for('auth.login') }}" class="navbar-item is-active">
+          <a href="{{ path_for('auth.login') }}" class="navbar-item">
             Login
           </a>
-          <a href="{{ path_for('auth.register') }}" class="navbar-item is-active">
+          <a href="{{ path_for('auth.register') }}" class="navbar-item">
             Registrar
           </a>
         {% else %}
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              {{ auth.user.name }}
-            </a>
-            <div class="navbar-dropdown">
-              <a class="navbar-item" href="{{ path_for('post.create')}}">
-                Dashboard
-              </a>
-              <a class="navbar-item" href="{{ path_for('user.avatar') }}">
-                  Avatar
-              </a>
-              <hr class="navbar-divider">
-              <a class="navbar-item" href="{{ path_for('auth.logout') }}">
-                Sair
-              </a>
-            </div>
-          </div> 
+          <a href="{{ path_for('user.avatar') }}" class="navbar-item">
+            Olá, {{ auth.user.name }}
+          </a>
+          <a href="{{ path_for('post.create') }}" class="navbar-item">
+            Criar Post
+          </a>
+          <a href="{{ path_for('user.posts') }}" class="navbar-item">
+            Seus Posts
+          </a>
+          <a href="{{ path_for('auth.logout') }}" class="navbar-item">
+            Sair
+          </a>
         {% endif %}
       </div>
     </div>

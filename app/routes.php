@@ -13,7 +13,8 @@ $app->group('/postagem', function () {
 
 $app->group('/usuario', function () {
     $this->map(['GET', 'POST'], '/avatar', 'UserController:avatar')->setName('user.avatar');
-});
+    $this->map(['GET', 'POST'], '/posts', 'UserController:posts')->setName('user.posts');
+})->add(new AuthMiddleware($container));
 
 $app->group('/auth', function () {
     $this->map(['GET', 'POST'], '/login', 'AuthController:login')->setName('auth.login');

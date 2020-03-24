@@ -20,13 +20,14 @@ class Mail
         $mail = new PHPMailer(true);
 
         try {
+            $mail = new PHPMailer(true);
             $mail->isSMTP();
-            $mail->Host = '';
-            $mail->SMTPAuth = true;
-            $mail->Username = '';
-            $mail->Password = '';
-            $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
+            $mail->Host = getenv('MAIL_HOST');
+            $mail->SMTPAuth = getenv('MAIL_SMTPAUTH');
+            $mail->Username = getenv('MAIL_USERNAME');
+            $mail->Password = getenv('MAIL_PASSWORD');
+            $mail->SMTPSecure = getenv('MAIL_SMTPSECURE');
+            $mail->Port = getenv('MAIL_PORT');
 
             $mail->CharSet = 'utf-8';
             $mail->setFrom($to['email'], $to['name']);

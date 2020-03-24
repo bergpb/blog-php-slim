@@ -1,21 +1,22 @@
 {% extends "layouts/base.twig"%}
 
+{% block title %} Editar Post {% endblock %}
+
 {% block content %}
 <section class="articles">
-  <div class="column is-8 is-offset-2">
+  <div class="column is-10 is-offset-1">
     <div class="card article">
       <div class="card-content">
         <form action="{{ path_for('post.edit', {'id': post.id}) }}" method="POST">
 
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">Título</label>
+              <label class="label">Título:</label>
             </div>
             <div class="field-body">
               <div class="field">
                 <p class="control is-expanded has-icons-left">
-                  <input class="input is-medium {{ errors.title ? 'is-danger' : ''}}" type="text" name="title" 
-                    placeholder="Windows 10 terá um novo terminal com abas." value="{{ post.title }}">
+                  <input class="input is-medium {{ errors.title ? 'is-danger' : ''}}" type="text" name="title" value="{{ post.title }}">
                   <span class="icon is-small is-left">
                     <i class="fas fa-heading"></i>
                   </span>
@@ -29,7 +30,7 @@
 
           <div class="field is-horizontal">
             <div class="field-label">
-              <label class="label">Status?</label>
+              <label class="label">Status:</label>
             </div>
             <div class="field-body">
               <div class="field is-narrow">
@@ -49,7 +50,7 @@
 
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">Descrição</label>
+              <label class="label">Descrição:</label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -72,7 +73,7 @@
               <div class="field">
                 <div class="control">
                   <button type="submit" class="button is-primary is-medium is-pulled-right">
-                    Editar
+                    Salvar Alterações
                   </button>
                 </div>
               </div>
@@ -81,12 +82,12 @@
         </form>
       </div>
     </div>
-    {% include "components/notifications.twig" %}
   </div>
 </section>
 {% endblock %}
 
 {% block js %}
+  <script src="{{ base_url() }}/libs/summernote/summernote-lite.min.js"></script>
   <script>
     $(document).ready(function() {
         $('#summernote').summernote({

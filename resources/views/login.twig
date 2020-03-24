@@ -1,5 +1,7 @@
 {% extends "layouts/base.twig" %}
 
+{% block title %} Login {% endblock %}
+
 {% block content %}
 <section class="articles">
   <div class="column is-8 is-offset-2">
@@ -8,29 +10,39 @@
         <form action="" method="POST">
 
           <div class="field">
-            <label class="label">E-mail</label>
+            <label class="label">E-mail:</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium" name="email" type="email" placeholder="marcuspereira@example.com">
+              <input class="input is-medium {{ errors.email ? 'is-danger' : '' }}" name="email" type="email" placeholder="email@email.com">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+              {% if errors.email %}
+                <span class="icon is-small is-right has-text-danger">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
             </div>
+            {% if errors.email %}
+              <p class="help is-danger">{{ errors.email | first }}</p>
+            {% endif %}
           </div>
 
           <div class="field">
-            <label class="label">Senha</label>
+            <label class="label">Senha:</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium" type="password" name="password" placeholder="*****">
+              <input class="input is-medium {{ errors.password ? 'is-danger' : '' }}" type="password" name="password" placeholder="*****">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+              {% if errors.password %}
+                <span class="icon is-small is-right has-text-danger">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
             </div>
+            {% if errors.password %}
+              <p class="help is-danger">{{ errors.password | first }}</p>
+            {% endif %}
           </div>
 
           <div class="field is-grouped">
@@ -41,7 +53,6 @@
         </form>
       </div>
     </div>
-    {% include "components/notifications.twig" %}
   </div>
 </section>
 

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Post;
 use Slim\Http\UploadedFile;
 
 class UserController extends Controller
@@ -27,6 +28,17 @@ class UserController extends Controller
         }
 
         return $response->withRedirect($this->container->router->pathFor('user.avatar'));
+    }
+
+    public function posts($request, $response)
+    {
+        $user_id = $this->container->auth->user()->id;
+
+        $data = [
+            'posts' => Post::where('user_id', $user_id)->orderBy('created_at', 'DESC')->get(),      
+        ];
+
+        return $this->container->view->render($response, 'user/posts.twig', $data);
     }
 
     private function moveUploadFile($directory, UploadedFile $uploadedFile)

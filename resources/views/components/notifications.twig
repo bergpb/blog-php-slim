@@ -1,11 +1,19 @@
-{% if flash.getMessage('error') %}
-    <div class="notification is-danger has-text-centered subtitle is-5">
-        {{ flash.getFirstMessage('error')}}
-    </div>
-{% endif%}
+<div style="margin-top: -80px" class="column is-10 is-offset-1">
+    {% if flash.getMessage('success') %}
+        <div class="notification is-success has-text-centered subtitle is-5">
+            {{ flash.getFirstMessage('success')}}
+        </div>
+    {% endif %}
 
-{% if flash.getMessage('success') %}
-    <div class="notification is-success has-text-centered subtitle is-5">
-        {{ flash.getFirstMessage('success')}}
-    </div>
-{% endif%}
+    {% if flash.getMessage('warning') %}
+        <div class="notification is-warning has-text-centered subtitle is-5">
+            {{ flash.getFirstMessage('warning')}}
+        </div>
+    {% endif %}
+
+    {% if flash.getMessage('error') %}
+        <div class="notification is-danger has-text-centered subtitle is-5">
+            {{ flash.getFirstMessage('error')}}
+        </div>
+    {% endif %}
+</div>

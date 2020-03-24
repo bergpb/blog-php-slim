@@ -22,6 +22,13 @@ class Auth {
         return isset($_SESSION['user']);
     }
 
+    public function admin()
+    {
+        if(isset($_SESSION['user']))
+            return User::find($_SESSION['user'])->permissions->is_admin;
+
+    }
+
     public function attempt(string $email, string $password)
     {
         $user = User::where('email', $email)->first();
