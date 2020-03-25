@@ -75,7 +75,7 @@ class PostController extends Controller
         $post->save();
 
         $this->container->flash->addMessage('success', 'Post alterado.');
-        return $response->withRedirect($this->container->router->pathFor('post.show', ['id' => $post->id]));
+        return $response->withRedirect($this->container->router->pathFor('user.posts', ['id' => $post->id]));
     }
 
     public function delete($request, $response)
@@ -83,12 +83,11 @@ class PostController extends Controller
         $post = Post::find($request->getParam('id'));
         $user_id = $this->container->auth->user();
 
-        if($this->container->auth->admin()){
+        if(!$this->container->auth->admin())
             if($post['user_id'] != $user_id){
                 $this->container->flash->addMessage('warning', 'Sem permissão para remover este post.');
                 return $response->withRedirect($this->container->router->pathFor('user.posts'));
             }
-        }
 
         if($post){
             $post->delete();

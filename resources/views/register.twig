@@ -10,15 +10,17 @@
         <form method="POST" action="">
 
           <div class="field">
-            <label class="label">Nome Completo</label>
+            <label class="label">Nome Completo:</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium {{ errors.name ? 'is-danger' : '' }}" name="name" type="text" placeholder="Ex: João Santos">
+              <input class="input is-medium {{ errors.name ? 'is-danger' : '' }}" name="name" type="text" placeholder="nomedeusuario">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+              {% if errors.name %}
+                <span class="icon is-small is-right has-text-danger">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
             </div>
             {% if errors.name %}
               <p class="help is-danger">{{ errors.name | first }}</p>
@@ -26,15 +28,17 @@
           </div>
 
           <div class="field">
-            <label class="label">E-mail</label>
+            <label class="label">E-mail:</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium {{ errors.email ? 'is-danger' : '' }}" name="email" type="email" placeholder="marcuspereira@example.com">
+              <input class="input is-medium {{ errors.email ? 'is-danger' : '' }}" name="email" type="email" placeholder="email@example.com">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+              {% if errors.email %}
+                <span class="icon is-small is-right has-text-danger">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
             </div>
             {% if errors.email %}
               <p class="help is-danger">{{ errors.email | first }}</p>
@@ -42,15 +46,17 @@
           </div>
           
           <div class="field">
-            <label class="label">Senha</label>
+            <label class="label">Senha:</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-medium {{ errors.password ? 'is-danger' : '' }}" name="password" type="password" placeholder="*****">
+              <input class="input is-medium {{ errors.password ? 'is-danger' : '' }}" name="password" type="password" placeholder="******">
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
-              <span class="icon is-small is-right">
-                <i class="fas fa-exclamation-triangle"></i>
-              </span>
+              {% if errors.password %}
+                <span class="icon is-small is-right has-text-danger">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </span>
+              {% endif %}
             </div>
             {% if errors.password %}
               <p class="help is-danger">{{ errors.password | first }}</p>

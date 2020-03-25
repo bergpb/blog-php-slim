@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Post;
+use Exception;
 
 class HomeController extends Controller
 {

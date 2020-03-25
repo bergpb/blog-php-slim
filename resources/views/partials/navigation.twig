@@ -1,7 +1,10 @@
+
+{% set active_nav = active_nav|default(current_path) %}
+
 <nav class="navbar is-fixed-top">
   <div class="container">
     <div class="navbar-brand">
-      <a href="{{ path_for('home') }}" class="navbar-item">
+      <a href="{{ path_for('home') }}" class="navbar-item {{ current_path == '/' ? 'is-active' }}">
         Início
       </a>
       <span class="navbar-burger burger" data-target="navbarMenu">
@@ -13,20 +16,20 @@
     <div id="navbarMenu" class="navbar-menu">
       <div class="navbar-end">
         {% if not auth.check %}
-          <a href="{{ path_for('auth.login') }}" class="navbar-item">
+          <a href="{{ path_for('auth.login') }}" class="navbar-item {{ current_path == '/auth/login' ? 'is-active' }}">
             Login
           </a>
-          <a href="{{ path_for('auth.register') }}" class="navbar-item">
+          <a href="{{ path_for('auth.register') }}" class="navbar-item {{ current_path == '/auth/registrar' ? 'is-active' }}">
             Registrar
           </a>
         {% else %}
-          <a href="{{ path_for('user.avatar') }}" class="navbar-item">
+          <a href="{{ path_for('user.avatar') }}" class="navbar-item {{ current_path == '/usuario/avatar' ? 'is-active' }}">
             Olá, {{ auth.user.name }}
           </a>
-          <a href="{{ path_for('post.create') }}" class="navbar-item">
+          <a href="{{ path_for('post.create') }}" class="navbar-item {{ current_path == '/postagem/criar' ? 'is-active' }}">
             Criar Post
           </a>
-          <a href="{{ path_for('user.posts') }}" class="navbar-item">
+          <a href="{{ path_for('user.posts') }}" class="navbar-item {{ current_path == '/usuario/posts' ? 'is-active' }}">
             Seus Posts
           </a>
           <a href="{{ path_for('auth.logout') }}" class="navbar-item">

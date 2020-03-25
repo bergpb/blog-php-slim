@@ -6,9 +6,11 @@ date_default_timezone_set('America/Fortaleza');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-# load .env file in project root
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+use Monolog\Logger;
+use Monolog\Handle\StreamHandler;
+
+// load .env file in project root
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
 $app = new Slim\App([
     'settings' => [
@@ -26,7 +28,7 @@ $app = new Slim\App([
     ],
 ]);
 
-// init cointainer
+// init container
 $container = $app->getContainer();
 
 // use eloquent
@@ -34,6 +36,29 @@ $capsule = new Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
+
+$container['errorHandler'] = function () {
+    return new App\Handlers\ErrorHandler;
+};
+
+$container['notFoundHandler'] = function () {
+    return function ($request, $response) {
+        return $response->withStatus(404)->write('Pagina nao encontrada');
+    };
+};
+
+// $container['notFoundHandler'] = function ($c) {
+//     return function ($request, $response ) use ($c) {
+//         $c->view->render('')
+//     };
+// };
+
+// $container['logger'] = function () {
+//     $logger = new Monolog\Logger('Logger');
+//     $fileHandler = new Monolog\Handler\StreamHandler('/logs/api.log');
+//     $logger->pushHandler($fileHandler);
+//     return $logger;
+// };
 
 // use validators
 $container['validator'] = function($container) {
@@ -76,10 +101,14 @@ $container['view'] = function ($container) {
         'user' => $container->auth->user(),
     ]);
 
+    $view->getEnvironment()->addGlobal('current_path',
+        $container["request"]->getUri()->getPath()
+    );
+
     return $view;
 };
 
-// register controllers
+// register services(controllers)
 $container['HomeController'] = function ($container) {
     return new App\Controllers\HomeController($container);
 };
