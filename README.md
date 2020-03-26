@@ -7,11 +7,15 @@ Instructions:
 1. Clone project,
 2. Enter in project folder,
 3. Create a ```.env``` file and add this keys:
+    * APP_ENV='development'
     * DB_DRIVER='mysql'
     * DB_HOST='0.0.0.0'
     * DB_DATABASE='mpblog'
     * DB_USERNAME='root'
     * DB_PASSWORD='root'
+    * DP_CHARSET='utf8'
+    * DB_COLLATION='utf8_unicode_ci'
+    * DB_PREFIX=''
 4. Install dependencies with ```composer install```,
 5. Execute ```docker-composer up -d``` to start database,
 6. Start app with command: ```php -S 0.0.0.0:8000 -t public/```,

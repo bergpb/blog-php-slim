@@ -6,27 +6,25 @@ date_default_timezone_set('America/Fortaleza');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Monolog\Logger;
-use Monolog\Handle\StreamHandler;
-
 // load .env file in project root
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
-$environment = getenv('APP_ENV');
+$env = getenv('APP_ENV');
 
 $app = new Slim\App([
     'settings' => [
+        'env' => getenv('APP_ENV'),
         'db' => [
             'driver' => getenv('DB_DRIVER'),
             'host' => getenv('DB_HOST'),
             'database' => getenv('DB_DATABASE'),
             'username' => getenv('DB_USERNAME'),
             'password' => getenv('DB_PASSWORD'),
-            'charset' => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix' => '',
+            'charset' => getenv('DP_CHARSET'),
+            'collation' => getenv('DB_COLLATION'),
+            'prefix' => getenv('DB_PREFIX'),
         ],
-        'displayErrorDetails' => ($environment == 'development') ? true : false,
+        'displayErrorDetails' => (getenv('APP_ENV') == 'development') ? true : false,
     ],
 ]);
 
@@ -39,31 +37,36 @@ $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-// only render this handler in development mode
-if($environment == 'development') {
-    $container['errorHandler'] = function ($c) {
-        return new App\Handlers\ErrorHandler($c->get('view'));
-    };
+// use monolog
+$container['logger'] = function() {
+    $logger = new Monolog\Logger('Logger');
+    $fileHandler = new Monolog\Handler\StreamHandler(__DIR__ . '/../logs/errors.log');
+    $logger->pushHandler($fileHandler);
+    return $logger;
 };
 
-$container['notFoundHandler'] = function ($c) {
-    return new App\Handlers\NotFoundHandler($c->get('view'));
+// to catch exceptions
+$container['errorHandler'] = function ($container) {
+    return new App\Handlers\ErrorHandler($container);
 };
 
-// $container['logger'] = function () {
-//     $logger = new Monolog\Logger('Logger');
-//     $fileHandler = new Monolog\Handler\StreamHandler('/logs/api.log');
-//     $logger->pushHandler($fileHandler);
-//     return $logger;
-// };
+// to catch 404 errors
+$container['notFoundHandler'] = function ($container) {
+    return new App\Handlers\NotFoundHandler($container);
+};
+
+// phpErrorHandler
+$container['phpErrorHandler'] = function ($container) {
+    return $container['errorHandler'];
+};
 
 // use validators
-$container['validator'] = function($container) {
+$container['validator'] = function() {
     return new App\Validation\Validator;
 };
 
 // use flash messages
-$container['flash'] = function($container) {
+$container['flash'] = function() {
     return new Slim\Flash\Messages;
 };
 

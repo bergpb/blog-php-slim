@@ -42,6 +42,11 @@
                 font-size: 36px;
                 padding: 20px;
             }
+            .subtitle {
+                font-size: 18px;
+                padding: 20px;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body cz-shortcut-listen="true">
@@ -51,7 +56,9 @@
                     Erro 404<br>
                     Página não encontrada.</br>
                 </div>
-                <h5><a href="{{ path_for('home') }}">Voltar a página inicial.</a></h5>
+                <div class="subtitle">
+                    <a href="{{ path_for('home') }}">Voltar a página inicial</a>
+                </div>
             </div>
         </div>
     

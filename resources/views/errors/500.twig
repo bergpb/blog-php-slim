@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Erro 500</title>
+        <title>500 Error</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -42,6 +42,11 @@
                 font-size: 36px;
                 padding: 20px;
             }
+            .subtitle {
+                font-size: 18px;
+                padding: 20px;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body cz-shortcut-listen="true">
@@ -49,8 +54,10 @@
             <div class="content">
                 <div class="title">
                     Erro 500<br>
-                    Ops! Algo de errado aconteceu.<br>
-                    <a href="{{ path_for('home') }}">Voltar a pagina inicial.</a>
+                    Ops! Tivemos problemas ao tratar essa requisição.</br>
+                </div>
+                <div class="subtitle">
+                    <a href="{{ path_for('home') }}">Voltar a página inicial</a>
                 </div>
             </div>
         </div>

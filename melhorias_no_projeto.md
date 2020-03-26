@@ -16,7 +16,8 @@
 - [x] - Ao criar um post o mesmo deve ser redirecionado para seus posts
 - [ ] - Reset de senha para usuário
 - [ ] - Troca de senha para usuário
-- [ ] - Proteger a rota de atualização de avatar
+- [x] - Proteger a rota de atualização de avatar
 - [x] - Mostrar imagem antes de usar o upload do avatar
 - [x] - Ordenação dos posts do mais novo pro mais antigo
-- [ ] - Ativação de logs na aplicação (Monolog)
+- [x] - Ativação de logs na aplicação (Monolog)
+- [x] - Páginas de erro personalizadas, 404 e 500 (apenas em produção).
