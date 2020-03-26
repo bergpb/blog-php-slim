@@ -32,8 +32,17 @@
               {% endif %}
             </div>
           </div>
+        {% else %}
+          <p style="margin-top: 30px" class="has-text-centered is-size-3">Ops! Sem posts cadastrados até o momento.</p>
         {% endif %}
       {% endfor %}
+    {% else %}
+      {% if auth.check %}
+        <p style="margin-top: 20px" class="has-text-centered is-size-3">Ops! Você ainda não tem nenhum post cadastrado.
+          Clique <a href="{{ path_for('post.create') }}">aqui</a> para cadastrar um novo post.</p>
+      {% else %}
+        <p style="margin-top: 30px" class="has-text-centered is-size-3">Ops! Sem posts cadastrados até o momento.</p>
+      {% endif %}
     {% endif %}
   </div>
 </section>

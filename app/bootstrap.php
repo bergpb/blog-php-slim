@@ -12,9 +12,10 @@ use Monolog\Handle\StreamHandler;
 // load .env file in project root
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
+$environment = getenv('APP_ENV');
+
 $app = new Slim\App([
     'settings' => [
-        'displayErrorDetails' => true,
         'db' => [
             'driver' => getenv('DB_DRIVER'),
             'host' => getenv('DB_HOST'),
@@ -25,6 +26,7 @@ $app = new Slim\App([
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
         ],
+        'displayErrorDetails' => ($environment == 'development') ? true : false,
     ],
 ]);
 
@@ -37,21 +39,16 @@ $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-$container['errorHandler'] = function () {
-    return new App\Handlers\ErrorHandler;
-};
-
-$container['notFoundHandler'] = function () {
-    return function ($request, $response) {
-        return $response->withStatus(404)->write('Pagina nao encontrada');
+// only render this handler in development mode
+if($environment == 'development') {
+    $container['errorHandler'] = function ($c) {
+        return new App\Handlers\ErrorHandler($c->get('view'));
     };
 };
 
-// $container['notFoundHandler'] = function ($c) {
-//     return function ($request, $response ) use ($c) {
-//         $c->view->render('')
-//     };
-// };
+$container['notFoundHandler'] = function ($c) {
+    return new App\Handlers\NotFoundHandler($c->get('view'));
+};
 
 // $container['logger'] = function () {
 //     $logger = new Monolog\Logger('Logger');

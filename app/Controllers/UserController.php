@@ -35,7 +35,7 @@ class UserController extends Controller
         $user_id = $this->container->auth->user()->id;
 
         $data = [
-            'posts' => Post::where('user_id', $user_id)->orderBy('created_at', 'DESC')->get(),      
+            'posts' => Post::where('user_id', $user_id)->orderBy('created_at', 'DESC')->get()
         ];
 
         return $this->container->view->render($response, 'user/posts.twig', $data);

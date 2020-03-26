@@ -4,7 +4,7 @@ namespace App\Handlers;
 
 use Slim\Views\Twig;
 
-class ErrorHandler
+class NotFoundHandler
 {
     private $view;
     // call class like a function
@@ -14,6 +14,6 @@ class ErrorHandler
 
     public function __invoke($request, $response)
     {
-        return $this->view->render($response, 'errors/500.twig')->withStatus(500);
+        return $this->view->render($response, 'errors/404.twig')->withStatus(404);
     }
 }

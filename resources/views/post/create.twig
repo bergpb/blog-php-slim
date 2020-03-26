@@ -91,7 +91,17 @@
     $(document).ready(function() {
         $('#summernote').summernote({
           lang: 'pt-BR',
-          height: 100
+          height: 100,
+          toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+          ],
         });
     });
   </script>
