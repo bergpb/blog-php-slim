@@ -83,6 +83,10 @@ $container['mail'] = function($container) {
     return new App\Mail($container);
 };
 
+$container['csrf'] = function(){
+    return new \Slim\Csrf\Guard;
+};
+
 // pass variables into you views
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
@@ -93,6 +97,9 @@ $container['view'] = function ($container) {
         $container->router,
         $container->request->getUri(),
     ));
+
+    // csrf extension
+    $view->addExtension(new App\Views\CsrfExtension($container['csrf']));
 
     $view->getEnvironment()->addGlobal('flash', $container->flash);
 
@@ -125,6 +132,7 @@ $container['PostController'] = function ($container) {
     return new App\Controllers\PostController($container);
 };
 
+$app->add($container->get('csrf'));
 $app->add(new App\Middleware\DisplayInputErrorsMiddleware($container));
 $app->add(new App\Middleware\OldInputMiddleware($container));
 

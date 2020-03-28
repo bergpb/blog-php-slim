@@ -45,4 +45,4 @@ Instructions:
 - [x] - Ordenação dos posts do mais novo pro mais antigo
 - [x] - Ativação de logs na aplicação (Monolog)
 - [x] - Páginas de erro personalizadas, 404 e 500 (apenas em produção)
-- [ ] - CSRF nos forms
+- [x] - CSRF nos forms -> composer require slim/csrf:0.8.0

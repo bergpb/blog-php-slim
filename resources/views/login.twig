@@ -9,6 +9,7 @@
     <div class="card article" style="margin-bottom: 10px;">
       <div class="card-content">
         <form action="" method="POST">
+        {{ csrf_field() | raw }}
           <div class="field">
             <label class="label">E-mail:</label>
             <div class="control has-icons-left has-icons-right">

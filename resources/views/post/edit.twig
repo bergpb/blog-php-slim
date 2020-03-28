@@ -8,7 +8,8 @@
     <div class="card article">
       <div class="card-content">
         <form action="{{ path_for('post.edit', {'id': post.id}) }}" method="POST">
-
+          {{ csrf_field() | raw }}
+          
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label">Título:</label>

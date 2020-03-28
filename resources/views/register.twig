@@ -8,7 +8,7 @@
     <div class="card article">
       <div class="card-content">
         <form method="POST" action="">
-
+          {{ csrf_field() | raw }}
           <div class="field">
             <label class="label">Nome Completo:</label>
             <div class="control has-icons-left has-icons-right">
