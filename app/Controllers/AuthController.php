@@ -13,10 +13,17 @@ class AuthController extends Controller
         if ($request->isGet())
             return $this->container->view->render($response, 'login.twig');
 
-        $validation = $this->container->validator->validate($request, [
-            'email' => v::notEmpty()->noWhitespace()->email(),
-            'password' => v::notEmpty()->noWhitespace()
-        ]);
+        $validation = $this->container->validator->validate($request, 
+            [
+                'email' => v::notEmpty()->noWhitespace()->email(),
+                'password' => v::notEmpty()->noWhitespace()
+            ],
+            [
+                'notEmpty' => 'Campo deve ser preenchido.',
+                'noWhitespace' => 'Campo nao deve conter espacos em branco.',
+                'email' => 'Email nao e valido.'
+            ]
+        );
 
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('auth.login'));
@@ -36,11 +43,20 @@ class AuthController extends Controller
             return $this->container->view->render($response, 'register.twig');
         }
 
-        $validation = $this->container->validator->validate($request, [
-            'name' => v::notEmpty()->alpha()->length(10),
-            'email' => v::notEmpty()->noWhitespace()->email(),
-            'password' => v::notEmpty()->noWhitespace()
-        ]);
+        $validation = $this->container->validator->validate($request, 
+            [
+                'name' => v::notEmpty()->alpha()->length(10),
+                'email' => v::notEmpty()->noWhitespace()->email(),
+                'password' => v::notEmpty()->noWhitespace()
+            ],
+            [
+                'noWhitespace' => 'Campo nao deve conter espacos em branco.',
+                'notEmpty' => 'Campo deve ser preenchido.',
+                'length' => 'Campo deve conter no minimo 10 caracteres.',
+                'alpha' => 'Caracteres invalidos inseridos. Apenas letras sao aceitas.',
+                'email' => 'Email nao e valido.'
+            ]
+        );
 
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('auth.register'));

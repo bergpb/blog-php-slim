@@ -12,10 +12,16 @@ class PostController extends Controller
         if($request->isGet())
             return $this->container->view->render($response, 'post/create.twig');
 
-        $validation = $this->container->validator->validate($request, [
-            'title' => v::length(5)->notEmpty(),
-            'description' => v::notEmpty()
-        ]);
+        $validation = $this->container->validator->validate($request, 
+            [
+                'title' => v::length(5)->notEmpty(),
+                'description' => v::notEmpty()
+            ],
+            [
+                'notEmpty' => 'Campo deve ser preenchido.',
+                'length' => 'Campo deve conter no monimo 5 caracteres.',
+            ]
+        );
 
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('post.create'));
@@ -61,10 +67,16 @@ class PostController extends Controller
                 return $response->withRedirect($this->container->router->pathFor('user.posts'));
             }
 
-        $validation = $this->container->validator->validate($request, [
-            'title' => v::length(5)->notEmpty(),
-            'description' => v::notEmpty()
-        ]);
+        $validation = $this->container->validator->validate($request, 
+            [
+                'title' => v::length(5)->notEmpty(),
+                'description' => v::notEmpty()
+            ],
+            [
+                'notEmpty' => 'Campo deve ser preenchido.',
+                'length' => 'Campo deve conter no monimo 5 caracteres.',
+            ]
+        );
 
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('post.edit', ['id' => $post->id]));
@@ -81,7 +93,7 @@ class PostController extends Controller
     public function delete($request, $response)
     {
         $post = Post::find($request->getParam('id'));
-        $user_id = $this->container->auth->user();
+        $user_id = $this->container->auth->user()->id;
 
         if(!$this->container->auth->admin())
             if($post['user_id'] != $user_id){

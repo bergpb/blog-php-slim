@@ -3,12 +3,12 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
+
 <section class="articles">
   <div class="column is-8 is-offset-2">
     <div class="card article" style="margin-bottom: 10px;">
       <div class="card-content">
         <form action="" method="POST">
-
           <div class="field">
             <label class="label">E-mail:</label>
             <div class="control has-icons-left has-icons-right">
@@ -26,7 +26,6 @@
               <p class="help is-danger">{{ errors.email | first }}</p>
             {% endif %}
           </div>
-
           <div class="field">
             <label class="label">Senha:</label>
             <div class="control has-icons-left has-icons-right">

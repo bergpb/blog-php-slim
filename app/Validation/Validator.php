@@ -8,14 +8,16 @@ class Validator
 {
     private $errors;
 
-    public function validate($request, array $rules)
+    public function validate($request, array $rules, array $messages)
     {
         foreach ($rules as $field => $rule) {
             try{
                 $rule->setName(ucfirst($field))->assert($request->getParam($field));
             }
             catch(NestedValidationException $e){
-                $this->errors[$field] = $e->getMessages();
+                $errors = $e->findMessages($messages);
+                $filteredErrors = array_filter($errors);
+                $this->errors[$field] = $filteredErrors;
             }
         }
 

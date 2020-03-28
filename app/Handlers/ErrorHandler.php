@@ -6,11 +6,11 @@ class ErrorHandler
 {
     protected $container;
 
-    // call class like a function
     public function __construct($container) {
         $this->container = $container;
     }
 
+    // call class like a function
     public function __invoke($request, $response, $exception)
     {
         $env = $this->container->get('settings')['env'];
@@ -29,9 +29,7 @@ class ErrorHandler
         if($env == 'production')
             return $this->container->view->render($response, 'errors/500.twig')->withStatus(500);
         
-        return $this->container->response
-                                ->withStatus(500)
-                                ->withJson($error);
+        return $this->container->response->withStatus(500)->withJson($error);
 
     }
 }
