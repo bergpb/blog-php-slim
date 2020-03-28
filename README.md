@@ -30,7 +30,7 @@ Instructions:
 - [x] - Mostrar aviso de posts vazios na home
 - [x] - Melhor forma de mostrar os alerts (local onde os mesmos aparecem)
 - [x] - Mudar placeholders em login e registro
-- [ ] - Como pegar o old('') como no laravel com slim
+- [x] - Como pegar o old('') como no laravel com slim
 - [x] - Verificar data na confirmação do email
 - [x] - Informar caso o usuário já tenha confirmado a conta anteriormente
 - [x] - Usuários podem ver todos os posts, mas podem editar ou excluir apenas os criados por eles mesmos

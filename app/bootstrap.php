@@ -126,5 +126,6 @@ $container['PostController'] = function ($container) {
 };
 
 $app->add(new App\Middleware\DisplayInputErrorsMiddleware($container));
+$app->add(new App\Middleware\OldInputMiddleware($container));
 
 require __DIR__ . '/routes.php';

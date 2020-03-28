@@ -19,7 +19,7 @@ class PostController extends Controller
             ],
             [
                 'notEmpty' => 'Campo deve ser preenchido.',
-                'length' => 'Campo deve conter no monimo 5 caracteres.',
+                'length' => 'Campo deve conter no minimo 5 caracteres.',
             ]
         );
 
@@ -74,7 +74,7 @@ class PostController extends Controller
             ],
             [
                 'notEmpty' => 'Campo deve ser preenchido.',
-                'length' => 'Campo deve conter no monimo 5 caracteres.',
+                'length' => 'Campo deve conter no minimo 5 caracteres.',
             ]
         );
 
