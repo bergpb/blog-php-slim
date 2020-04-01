@@ -68,7 +68,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->getParam('name'),
             'email' => $request->getParam('email'),
-            'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+            'password' => password_hash($request->getParam('password'), PASSWORD_BCRYPT),
             'avatar' => 'default-user.png',
             'confirmation_key' => $key,
             'confirmation_expires' => $now,

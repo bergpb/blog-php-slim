@@ -4,3 +4,4 @@ vendor/
 .phpintel/
 logs
 public/uploads/*
+*.sqlite3

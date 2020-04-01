@@ -27,7 +27,7 @@ services:
             - MYSQL_USER=root
             - MYSQL_PASSWORD=root
             - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_DATABASE=mpblog
+            - MYSQL_DATABASE=blog
 
 networks:
     blog-slim-network:
