@@ -2,7 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-$db = include __DIR__ . '/config/database.php';
+$db = include __DIR__ . '/config/enviroments/production.php';
 
 return [
     'paths' => [
@@ -17,17 +17,18 @@ return [
         'default_migration_table' => 'migrations',
         'default_database' => 'development',
         'development' => [
-            'adapter' => $db['development']['adapter'],
-            'name' => $db['development']['name'],
+            'adapter' => 'sqlite',
+            'name' => './database/database'
         ],
         'production' => [
-            'adapter' => $db['production']['driver'],
-            'host' => $db['production']['host'],
-            'name' => $db['production']['database'],
-            'user' => $db['production']['username'],
-            'pass' => $db['production']['password'],
-            'charset' => $db['production']['charset'],
-            'collation' => $db['production']['collation']
+            'adapter' => $db['driver'],
+            'host' => $db['host'],
+            'name' => $db['database'],
+            'user' => $db['username'],
+            'pass' => $db['password'],
+            'charset' => $db['charset'],
+            'collation' => $db['collation'],
+            'prefix' => $db['prefix'],
         ]
     ]
 ];

@@ -61,6 +61,11 @@ class AuthController extends Controller
         if($validation->failed())
             return $response->withRedirect($this->container->router->pathFor('auth.register'));
 
+        if(User::where('email', $request->getParam('email'))->exists()){
+            $this->container->flash->addMessage('error', 'Email já cadastrado.');
+            return $response->withRedirect($this->container->router->pathFor('auth.register'));
+        }
+
         $now = new \Datetime(date('d-m-Y H:i:s'));
         $now->modify('+1 hour');
         $key = bin2hex(random_bytes(20));

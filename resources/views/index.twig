@@ -7,41 +7,38 @@
   <div class="column is-8 is-offset-2">
     {% if posts|length > 0 %}
       {% for post in posts %}
-        {% if post.published %}
-          <div class="card article">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-center">
-                  <img src="{{ base_url }}/uploads/{{ post.author.avatar }}" alt="Imagem do Author" class="author-image" />
-                </div>
-                <div class="media-content has-text-centered">
-                  <p class="title article-title">{{ post.title | title }}</p>
-                  <small class="subtitle is-6 article-subtitle">
-                    <span>Postado por {{ post.author.name }} em {{ post.created_at | date('d/m/Y') }}</span>
-                  </small>
-                </div>
+        <div class="card article">
+          <div class="card-content">
+            <div class="media">
+              <div class="media-center">
+                <img src="{{ base_url }}/uploads/{{ post.author.avatar }}" alt="Imagem do Author" class="author-image" />
               </div>
-              <div class="content article-body">
-                {{ post.description | raw }}
+              <div class="media-content has-text-centered">
+                <p class="title article-title">{{ post.title | title }}</p>
+                <small class="subtitle is-6 article-subtitle">
+                  <span>Postado por {{ post.author.name }} em {{ post.created_at | date('d/m/Y') }}</span>
+                </small>
               </div>
-              {% if auth.user.permissions.is_admin %}
-                <div class="has-text-right">
-                  <a href="{{ path_for('post.edit', {'id': post.id }) }}" class="button is-info is-focused">Editar</a>
-                  <a href="{{ path_for('post.delete') }}?id={{ post.id }}" class="button is-danger is-focused">Deletar</a>
-                </div>
-              {% endif %}
             </div>
+            <div class="content article-body">
+              {{ post.description | raw }}
+            </div>
+            {% if auth.user.permissions.is_admin %}
+              <div class="has-text-right">
+                <a href="{{ path_for('post.edit', {'id': post.id }) }}" class="button is-info is-focused">Editar</a>
+                <a href="{{ path_for('post.delete') }}?id={{ post.id }}" class="button is-danger is-focused">Deletar</a>
+              </div>
+            {% endif %}
           </div>
-        {% else %}
-          <p style="margin-top: 30px" class="has-text-centered is-size-3">Ops! Sem posts cadastrados até o momento.</p>
-        {% endif %}
+        </div>
       {% endfor %}
     {% else %}
       {% if auth.check %}
-        <p style="margin-top: 20px" class="has-text-centered is-size-3">Ops! Você ainda não tem nenhum post cadastrado.
+        <p class="has-text-centered is-size-4">
+          Ops! Você ainda não tem nenhum post cadastrado.
           Clique <a href="{{ path_for('post.create') }}">aqui</a> para cadastrar um novo post.</p>
       {% else %}
-        <p style="margin-top: 30px" class="has-text-centered is-size-3">Ops! Sem posts cadastrados até o momento.</p>
+        <p class="has-text-centered is-size-3">Ops! Sem posts cadastrados até o momento.</p>
       {% endif %}
     {% endif %}
   </div>

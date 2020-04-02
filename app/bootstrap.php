@@ -6,29 +6,14 @@ date_default_timezone_set('America/Fortaleza');
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// load database configurations
-$db = include __DIR__ . '/../config/database.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
 
-$env = getenv('APP_ENV');
+$db_config = require __DIR__ . '/../config/environments/' . getenv('APP_ENV') . '.php';
 
 $app = new Slim\App([
     'settings' => [
         'env' => getenv('APP_ENV'),
-        'db' => [
-            'driver'    => 'sqlite',
-            'database'  => __DIR__ . '/../database/database.sqlite3',
-            'prefix'    => ''
-        ],
-        // 'db' => [
-        //     'driver' => $db['development']['driver'],
-        //     'host' => $db['development']['adapter'],
-        //     'database' => $db['development']['adapter'],
-        //     'username' => $db['development']['adapter'],
-        //     'password' => $db['development']['adapter'],
-        //     'charset' => $db['development']['adapter'],
-        //     'collation' => $db['development']['adapter'],
-        //     'prefix' => $db['development']['adapter'],
-        // ],
+        'db' => $db_config,
         'displayErrorDetails' => (getenv('APP_ENV') == 'development') ? true : false,
     ],
 ]);
